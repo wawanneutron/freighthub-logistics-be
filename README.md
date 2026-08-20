@@ -156,3 +156,4 @@ http://localhost:3000/api
 | `GET` | `/orders/track/:trackingNumber` | Track an order by tracking number |
 | `PATCH` | `/orders/:id/status` | Update an order status |
 | `PATCH` | `/orders/:id/cancel` | Cancel a pending order |
+| `GET` | `/orders/:id` | Get details of a single order by ID |
