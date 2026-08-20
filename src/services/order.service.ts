@@ -79,4 +79,12 @@ export const orderService = {
 
         return orderRepository.updateStatus(id, "CANCELED");
     },
+
+    async getOrderById(id: number) {
+        const order = await orderRepository.findById(id);
+
+        if (!order) throw new ApiError(404, "Order not found");
+
+        return order;
+    },
 };

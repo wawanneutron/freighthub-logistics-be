@@ -10,6 +10,7 @@ import {
     trackOrderSchema,
     updateOrderStatusSchema,
     cancelOrderSchema,
+    getOrderByIdSchema,
 } from "../schemas/order.schema.js";
 
 const router = Router();
@@ -30,6 +31,12 @@ router.get(
     "/track/:trackingNumber",
     validate(trackOrderSchema),
     orderController.trackOrder,
+);
+
+router.get(
+    "/:id",
+    validate(getOrderByIdSchema),
+    orderController.getOrderById,
 );
 
 router.patch(

@@ -82,4 +82,16 @@ export const orderController = {
             data: order,
         });
     },
+
+    async getOrderById(req: Request, res: Response): Promise<void> {
+        const id = Number(req.params.id);
+
+        const order = await orderService.getOrderById(id);
+
+        res.status(200).json({
+            success: true,
+            message: "Order details retrieved successfully",
+            data: order,
+        });
+    },
 };
