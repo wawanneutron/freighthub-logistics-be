@@ -57,4 +57,16 @@ export const orderService = {
 
         return order;
     },
+
+    async updateOrderStatus(id: number, status: OrderStatus) {
+        const order = await orderRepository.findById(id);
+
+        if (!order) throw new ApiError(404, "Order not found");
+
+        if (order.status === "CANCELED") throw new ApiError(400, "Canceled order status cannot be updated");
+
+        if (order.status === "DELIVERED") throw new ApiError(400, "Delivered order status cannot be updated");
+
+        return orderRepository.updateStatus(id, status);
+    },
 };

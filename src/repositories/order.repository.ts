@@ -85,4 +85,23 @@ export const orderRepository = {
             total,
         };
     },
+
+    findById(id: number) {
+        return prisma.order.findUnique({
+            where: {
+                id,
+            },
+        });
+    },
+
+    updateStatus(id: number, status: OrderStatus) {
+        return prisma.order.update({
+            where: {
+                id,
+            },
+            data: {
+                status,
+            },
+        });
+    },
 };

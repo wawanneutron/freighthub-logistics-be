@@ -62,3 +62,17 @@ export const trackOrderSchema = z.object({
             .min(1, "Tracking number is required"),
     }),
 });
+
+export const updateOrderStatusSchema = z.object({   
+    params: z.object({
+        id: z.coerce.number().int().positive(),
+    }),
+
+    body: z.object({
+        status: z.enum([
+            "PENDING",
+            "IN_TRANSIT",
+            "DELIVERED",
+        ]),
+  }),
+});

@@ -56,4 +56,18 @@ export const orderController = {
             data: order,
         });
     },
+
+    async updateOrderStatus(req: Request, res: Response): Promise<void> {
+        const id = Number(req.params.id);
+
+        const { status } = req.body;
+
+        const order = await orderService.updateOrderStatus(id, status);
+
+        res.status(200).json({
+            success: true,
+            message: "Order status updated successfully",
+            data: order,
+        });
+    },
 };
