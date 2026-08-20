@@ -3,6 +3,7 @@ import cors from "cors";
 
 import routes from "./routes/index.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
+import { notFoundHandler } from "./middlewares/not-found.middleware.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.get("/", (_req, res) => {
 
 app.use("/api", routes);
 
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 export default app;
