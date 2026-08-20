@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum OrderStatus {
+  PENDING
+  IN_TRANSIT
+  DELIVERED
+  CANCELED
+}
+
+model Order {
+  id             Int         @id @default(autoincrement())
+  trackingNumber String      @unique @map("tracking_number")
+  senderName     String      @map("sender_name")
+  recipientName  String      @map("recipient_name")
+  origin         String
+  destination    String
+  status         OrderStatus @default(PENDING)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([status])
+  @@index([senderName])
+  @@index([recipientName])
+  @@map("orders")
+}
