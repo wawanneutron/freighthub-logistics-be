@@ -6,12 +6,10 @@ import type {
 import type { OrderStatus } from "../generated/prisma/client.js";
 
 import { orderService } from "../services/order.service.js";
+import { ApiError } from "../utils/api-error.js";
 
 export const orderController = {
-    async createOrder(
-        req: Request,
-        res: Response,
-    ): Promise<void> {
+    async createOrder(req: Request, res: Response): Promise<void> {
         const order = await orderService.createOrder(req.body);
 
         res.status(201).json({
@@ -21,10 +19,7 @@ export const orderController = {
         });
     },
 
-    async getOrders(
-        req: Request,
-        res: Response,
-    ): Promise<void> {
+    async getOrders(req: Request, res: Response): Promise<void> {
         const {
             page = "1",
             limit = "10",
@@ -45,6 +40,20 @@ export const orderController = {
             success: true,
             message: "Orders retrieved successfully",
             ...result,
+        });
+    },
+
+    async trackOrder(req: Request, res: Response): Promise<void> {
+        const { trackingNumber } = req.params;
+
+        if (typeof trackingNumber !== "string") throw new ApiError(400, "Invalid tracking number");
+
+        const order = await orderService.trackOrder(trackingNumber);
+
+        res.status(200).json({
+            success: true,
+            message: "Order retrieved successfully",
+            data: order,
         });
     },
 };

@@ -7,6 +7,7 @@ import { validate } from "../middlewares/validate.middleware.js";
 import {
     createOrderSchema,
     getOrdersSchema,
+    trackOrderSchema,
 } from "../schemas/order.schema.js";
 
 const router = Router();
@@ -21,6 +22,12 @@ router.get(
     "/",
     validate(getOrdersSchema),
     orderController.getOrders,
+);
+
+router.get(
+    "/track/:trackingNumber",
+    validate(trackOrderSchema),
+    orderController.trackOrder,
 );
 
 export default router;

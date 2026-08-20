@@ -2,6 +2,7 @@ import type { OrderStatus } from "../generated/prisma/client.js";
 
 import { orderRepository } from "../repositories/order.repository.js";
 import { generateTrackingNumber } from "../utils/tracking-number.js";
+import { ApiError } from "../utils/api-error.js";
 
 interface CreateOrderInput {
     senderName: string;
@@ -32,8 +33,7 @@ export const orderService = {
     },
 
     async getOrders(input: GetOrdersInput) {
-        const { orders, total } =
-            await orderRepository.findAll(input);
+        const { orders, total } = await orderRepository.findAll(input);
 
         const totalPages = Math.ceil(total / input.limit);
 
@@ -47,5 +47,14 @@ export const orderService = {
                 totalPages,
             },
         };
+    },
+
+
+    async trackOrder(trackingNumber: string) {
+        const order = await orderRepository.findByTrackingNumber(trackingNumber);
+
+        if (!order) throw new ApiError(404, "Order not found");
+
+        return order;
     },
 };

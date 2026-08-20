@@ -53,3 +53,12 @@ export const getOrdersSchema = z.object({
         recipient: z.string().trim().optional(),
     }),
 });
+
+export const trackOrderSchema = z.object({
+    params: z.object({
+        trackingNumber: z
+            .string()
+            .trim()
+            .min(1, "Tracking number is required"),
+    }),
+});
