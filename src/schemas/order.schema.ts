@@ -27,3 +27,29 @@ export const createOrderSchema = z.object({
             .max(150, "Destination is too long"),
     }),
 });
+
+export const getOrdersSchema = z.object({
+    query: z.object({
+        page: z.coerce.number().int().positive().default(1),
+
+        limit: z.coerce
+            .number()
+            .int()
+            .positive()
+            .max(100)
+            .default(10),
+
+        status: z
+            .enum([
+                "PENDING",
+                "IN_TRANSIT",
+                "DELIVERED",
+                "CANCELED",
+            ])
+            .optional(),
+
+        sender: z.string().trim().optional(),
+
+        recipient: z.string().trim().optional(),
+    }),
+});
