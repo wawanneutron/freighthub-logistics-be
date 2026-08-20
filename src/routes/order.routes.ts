@@ -9,6 +9,7 @@ import {
     getOrdersSchema,
     trackOrderSchema,
     updateOrderStatusSchema,
+    cancelOrderSchema,
 } from "../schemas/order.schema.js";
 
 const router = Router();
@@ -35,6 +36,12 @@ router.patch(
     "/:id/status",
     validate(updateOrderStatusSchema),
     orderController.updateOrderStatus,
+);
+
+router.patch(
+    "/:id/cancel",
+    validate(cancelOrderSchema),
+    orderController.cancelOrder,
 );
 
 export default router;

@@ -69,4 +69,14 @@ export const orderService = {
 
         return orderRepository.updateStatus(id, status);
     },
+
+    async cancelOrder(id: number) {
+        const order = await orderRepository.findById(id);
+
+        if (!order) throw new ApiError(404, "Order not found");
+
+        if (order.status !== "PENDING") throw new ApiError(400, "Only pending orders can be canceled");
+
+        return orderRepository.updateStatus(id, "CANCELED");
+    },
 };

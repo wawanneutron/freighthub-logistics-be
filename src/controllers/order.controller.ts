@@ -70,4 +70,16 @@ export const orderController = {
             data: order,
         });
     },
+
+    async cancelOrder(req: Request, res: Response): Promise<void> {
+        const id = Number(req.params.id);
+
+        const order = await orderService.cancelOrder(id);
+
+        res.status(200).json({
+            success: true,
+            message: "Order canceled successfully",
+            data: order,
+        });
+    },
 };
