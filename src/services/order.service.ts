@@ -1,3 +1,5 @@
+import type { OrderStatus } from "../generated/prisma/client.js";
+
 import { orderRepository } from "../repositories/order.repository.js";
 import { generateTrackingNumber } from "../utils/tracking-number.js";
 
@@ -6,6 +8,14 @@ interface CreateOrderInput {
     recipientName: string;
     origin: string;
     destination: string;
+}
+
+interface GetOrdersInput {
+    page: number;
+    limit: number;
+    status?: OrderStatus;
+    sender?: string;
+    recipient?: string;
 }
 
 export const orderService = {
@@ -19,5 +29,23 @@ export const orderService = {
             origin: input.origin,
             destination: input.destination,
         });
+    },
+
+    async getOrders(input: GetOrdersInput) {
+        const { orders, total } =
+            await orderRepository.findAll(input);
+
+        const totalPages = Math.ceil(total / input.limit);
+
+        return {
+            data: orders,
+
+            pagination: {
+                page: input.page,
+                limit: input.limit,
+                total,
+                totalPages,
+            },
+        };
     },
 };
