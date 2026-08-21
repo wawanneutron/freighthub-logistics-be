@@ -1,17 +1,8 @@
-import type {
-    NextFunction,
-    Request,
-    Response,
-} from "express";
+import type { NextFunction, Request, Response } from "express";
 
 import { ApiError } from "../utils/api-error.js";
 
-export const errorHandler = (
-    error: unknown,
-    _req: Request,
-    res: Response,
-    _next: NextFunction,
-): void => {
+export const errorHandler = (error: unknown, _req: Request, res: Response, _next: NextFunction): void => {
     if (error instanceof ApiError) {
         res.status(error.statusCode).json({
             success: false,
