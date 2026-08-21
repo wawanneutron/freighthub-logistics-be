@@ -1,25 +1,6 @@
-import type {
-    OrderStatus,
-    Prisma,
-} from "../generated/prisma/client.js";
-
 import { prisma } from "../lib/prisma.js";
-
-interface CreateOrderData {
-    trackingNumber: string;
-    senderName: string;
-    recipientName: string;
-    origin: string;
-    destination: string;
-}
-
-interface FindAllOrdersParams {
-    page: number;
-    limit: number;
-    status?: OrderStatus;
-    sender?: string;
-    recipient?: string;
-}
+import type { OrderStatus, Prisma } from "../generated/prisma/client.js";
+import type { CreateOrderData, FindAllOrdersParams } from "../types/order.js";
 
 export const orderRepository = {
     create(data: CreateOrderData) {

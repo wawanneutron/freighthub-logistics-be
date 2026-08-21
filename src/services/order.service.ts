@@ -3,21 +3,7 @@ import type { OrderStatus } from "../generated/prisma/client.js";
 import { orderRepository } from "../repositories/order.repository.js";
 import { generateTrackingNumber } from "../utils/tracking-number.js";
 import { ApiError } from "../utils/api-error.js";
-
-interface CreateOrderInput {
-    senderName: string;
-    recipientName: string;
-    origin: string;
-    destination: string;
-}
-
-interface GetOrdersInput {
-    page: number;
-    limit: number;
-    status?: OrderStatus;
-    sender?: string;
-    recipient?: string;
-}
+import type { CreateOrderInput, GetOrdersInput } from "../types/order.js";
 
 export const orderService = {
     async createOrder(input: CreateOrderInput) {
